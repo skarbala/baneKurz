@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.Selectors.byAttribute;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class KiwiTest {
@@ -26,5 +27,16 @@ public class KiwiTest {
         //3.ulozim si cenu letenky do premennej
         String price = wrapper.find("strong[class*='PriceText']").shouldNotBe(Condition.empty).getText();
         //4.otvorim detail letenky a porovnam cenu
+        wrapper.click();
+        $("div[data-test='ModalFooter'] div[class*=FooterPriceWrapper]")
+                .shouldHave(Condition.text(price));
+        $("div[data-test='ModalFooter']").find(byText("Book"))
+                .shouldBe(Condition.enabled)
+                .shouldBe(Condition.visible);
+    }
+
+
+    public static void main(String[] args) {
+
     }
 }
