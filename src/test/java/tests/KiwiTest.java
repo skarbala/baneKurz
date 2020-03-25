@@ -9,6 +9,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selectors.byAttribute;
@@ -17,10 +18,16 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class KiwiTest {
 
+    public static final String USERNAME = "matko5";
+    public static final String AUTOMATE_KEY = "wba3Hey1qW54Lt5Hz67U";
+    public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+
     @BeforeAll
     static void config() {
         Configuration.baseUrl = "https://www.kiwi.com/en";
         Configuration.startMaximized = true;
+        Configuration.remote = URL;
+        Configuration.browserCapabilities = getCapabilites();
     }
 
     @Test
@@ -45,7 +52,7 @@ public class KiwiTest {
                 .shouldBe(Condition.visible);
     }
 
-    @RepeatedTest(10)
+    @Test
     void itShouldFindNomadTripAndCheckPriceOnReservation() {
         open("/nomad");
         setCookieConsent();
@@ -103,5 +110,15 @@ public class KiwiTest {
     private void setCookieConsent() {
         var cookie = new Cookie("cookie_consent", "agreed");
         WebDriverRunner.getWebDriver().manage().addCookie(cookie);
+    }
+
+    private static DesiredCapabilities getCapabilites(){
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("browser", "Edge");
+        caps.setCapability("browser_version", "80.0");
+        caps.setCapability("os", "Windows");
+        caps.setCapability("os_version", "10");
+        caps.setCapability("resolution", "1920x1080");
+        return caps;
     }
 }
