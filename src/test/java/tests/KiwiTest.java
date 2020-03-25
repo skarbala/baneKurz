@@ -2,9 +2,11 @@ package tests;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.WebDriverRunner;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -32,5 +34,11 @@ public class KiwiTest {
         $("div[data-test='ModalFooter']").find(byText("Book"))
                 .shouldBe(Condition.enabled)
                 .shouldBe(Condition.visible);
+    }
+
+
+    @AfterEach
+    void quitDriver() {
+        WebDriverRunner.getWebDriver().quit();
     }
 }
