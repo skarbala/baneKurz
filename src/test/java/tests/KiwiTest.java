@@ -5,7 +5,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -31,7 +31,8 @@ public class KiwiTest {
     }
 
     @Test
-    void itShouldOpenMainPage() {
+    @DisplayName("Check that price equals on result and detail page")
+    void itShouldCheckThatPriceEqualsOnResultAndDetail() {
         open("/");
         setCookieConsent();
         refresh();
@@ -53,6 +54,7 @@ public class KiwiTest {
     }
 
     @Test
+    @DisplayName("Check that price is displayed on nomad reservation")
     void itShouldFindNomadTripAndCheckPriceOnReservation() {
         open("/nomad");
         setCookieConsent();
@@ -73,6 +75,7 @@ public class KiwiTest {
     }
 
     @Test
+    @DisplayName("Check that changed currency is displayed on result")
     void itShouldChangeCurrencyAndCheckPrice() {
         open("/");
         setCookieConsent();
@@ -112,7 +115,7 @@ public class KiwiTest {
         WebDriverRunner.getWebDriver().manage().addCookie(cookie);
     }
 
-    private static DesiredCapabilities getCapabilites(){
+    private static DesiredCapabilities getCapabilites() {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("browser", "Edge");
         caps.setCapability("browser_version", "80.0");
