@@ -3,10 +3,7 @@ package tests;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -22,12 +19,20 @@ public class KiwiTest {
     public static final String AUTOMATE_KEY = "wba3Hey1qW54Lt5Hz67U";
     public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
 
+    DesiredCapabilities caps;
+
     @BeforeAll
     static void config() {
         Configuration.baseUrl = "https://www.kiwi.com/en";
         Configuration.startMaximized = true;
         Configuration.remote = URL;
         Configuration.browserCapabilities = getCapabilites();
+    }
+
+    @BeforeEach
+    void setUp(TestInfo testInfo) {
+        var testName = testInfo.getDisplayName();
+        caps.setCapability("name", testName);
     }
 
     @Test
