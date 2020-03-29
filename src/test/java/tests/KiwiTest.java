@@ -3,12 +3,11 @@ package tests;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import drivers.BrowserBase;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selectors.byAttribute;
@@ -17,20 +16,18 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class KiwiTest {
 
-//    DesiredCapabilities caps;
-
     @BeforeAll
     static void config() {
         Configuration.baseUrl = "https://www.kiwi.com/en";
         Configuration.startMaximized = true;
         Configuration.browser = "drivers.EdgeBrowser";
     }
-//
-//    @BeforeEach
-//    void setUp(TestInfo testInfo) {
-//        var testName = testInfo.getDisplayName();
-//        caps.setCapability("name", testName);
-//    }
+
+    @BeforeEach
+    void setUp(TestInfo testInfo) {
+        var testName = testInfo.getDisplayName();
+        BrowserBase.getCapabilities().setCapability("name", testName);
+    }
 
     @Test
     @DisplayName("Check that price equals on result and detail page")
