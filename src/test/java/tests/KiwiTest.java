@@ -5,6 +5,8 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import drivers.BrowserBase;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -20,7 +22,6 @@ public class KiwiTest {
     static void config() {
         Configuration.baseUrl = "https://www.kiwi.com/en";
         Configuration.startMaximized = true;
-        Configuration.browser = "drivers.EdgeBrowser";
     }
 
     @BeforeEach
@@ -29,9 +30,10 @@ public class KiwiTest {
         BrowserBase.getCapabilities().setCapability("name", testName);
     }
 
-    @Test
-    @DisplayName("Check that price equals on result and detail page")
-    void itShouldCheckThatPriceEqualsOnResultAndDetail() {
+    @ParameterizedTest(name = "Check that price equals on result and detail page")
+    @ValueSource(strings = {"drivers.EdgeBrowser", "drivers.ChromeBrowser"})
+    void itShouldCheckThatPriceEqualsOnResultAndDetail(String browser) {
+        Configuration.browser = browser;
         open("/");
         setCookieConsent();
         refresh();
