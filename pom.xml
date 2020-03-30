@@ -43,6 +43,12 @@
             <version>5.6.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- Pull in as a traditional dependency -->
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.7.00</version>
+        </dependency>
 
     </dependencies>
 </project>
