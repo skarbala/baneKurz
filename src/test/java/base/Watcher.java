@@ -3,7 +3,7 @@ package base;
 import browserstack.Result;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
-import utils.BrowserStackIntegration;
+import browserstack.BrowserStackIntegration;
 
 public class Watcher implements TestWatcher {
     @Override

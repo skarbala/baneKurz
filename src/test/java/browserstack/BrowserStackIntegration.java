@@ -1,23 +1,26 @@
-package utils;
+package browserstack;
 
+import browserstack.BSConfigHelper;
 import browserstack.Result;
 import kong.unirest.Unirest;
+
+import static browserstack.BSConfigHelper.getConfigValue;
 
 public class BrowserStackIntegration {
 
     public static void setResult(String sessionId, Result result) {
-        Unirest.put("https://api.browserstack.com/automate/sessions/{sessionId}.json")
+        Unirest.put(getConfigValue("session-endpoint").concat("{sessionId}.json"))
                 .routeParam("sessionId", sessionId)
                 .header("Content-Type", "application/json")
-                .basicAuth("matko5", "wba3Hey1qW54Lt5Hz67U")
+                .basicAuth(getConfigValue("name"), getConfigValue("automate-key"))
                 .body(result)
                 .asJson();
     }
 
     public static String getPublicUrl(String sessionId) {
-        return Unirest.get("https://api.browserstack.com/automate/sessions/{sessionId}.json")
+        return Unirest.get(getConfigValue("session-endpoint").concat("{sessionId}.json"))
                 .routeParam("sessionId", sessionId)
-                .basicAuth("matko5", "wba3Hey1qW54Lt5Hz67U")
+                .basicAuth(getConfigValue("name"), getConfigValue("automate-key"))
                 .asJson().getBody()
                 .getObject()
                 .getJSONObject("automation_session")
