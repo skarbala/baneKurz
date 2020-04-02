@@ -9,8 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Selectors.byAttribute;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class KiwiTest extends TestBase {
@@ -21,12 +20,13 @@ public class KiwiTest extends TestBase {
         open("/");
         setCookieConsent();
         refresh();
+        $(byText("I understand")).click();
         $(byDataTestAttribute("LandingSearchButton")).click();
         //1.kliknut na prvy vyskyt/ponuku destinacie
         $(byDataTestAttribute("PictureCard")).click();
         //2.pockam kym sa mi nacitaju letenky
         var wrapper = $(byDataTestAttribute("ResultCardWrapper"))
-                .waitUntil(Condition.appears, 15000);
+                .waitUntil(Condition.appears, 20000);
         //3.ulozim si cenu letenky do premennej
         var price = wrapper.find("strong[class*='PriceText']").shouldNotBe(Condition.empty).getText();
         //4.otvorim detail letenky a porovnam cenu
@@ -44,6 +44,8 @@ public class KiwiTest extends TestBase {
         open("/nomad");
         setCookieConsent();
         refresh();
+        $(byText("I understand")).click();
+
 //        1.vyber cestu po azii
         $$("div[class*=ExampleItemstyled]")
                 .shouldHave(sizeGreaterThan(1))
@@ -51,11 +53,11 @@ public class KiwiTest extends TestBase {
                 .click();
         //2.pockaj kym sa zobrazi booking button a klikni nan
         $(byDataTestAttribute("BookingButton"))
-                .waitUntil(Condition.appears, 15000)
+                .waitUntil(Condition.appears, 20000)
                 .click();
         //3.over ze cena na registracii nie je prazdna
         $("div.ReservationBill-item-price")
-                .waitUntil(Condition.appears, 15000)
+                .waitUntil(Condition.appears, 20000)
                 .shouldNotBe(Condition.empty);
     }
 
@@ -65,6 +67,8 @@ public class KiwiTest extends TestBase {
         open("/");
         setCookieConsent();
         refresh();
+        $(byText("I understand")).click();
+
         //1. zmen menu a vyber si japonsky yen
         $(byDataTestAttribute("Currency-Open")).click();
         $(byDataTestAttribute("Currency-Item-jpy")).click();
@@ -81,7 +85,7 @@ public class KiwiTest extends TestBase {
         $(byText("Search")).click();
         //4.pockaj kym sa nacitaju letenky (vyuzi metodu z prveho testu)
         var wrapper = $(byDataTestAttribute("ResultCardWrapper"))
-                .waitUntil(Condition.appears, 15000);
+                .waitUntil(Condition.appears, 20000);
         //5.over ze cena obsahuje menu japonsky yen
         wrapper.find("strong[class*='PriceText']").shouldHave(Condition.text("¥"));
     }
